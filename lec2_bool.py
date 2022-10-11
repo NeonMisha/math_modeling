@@ -1,0 +1,7 @@
+print(bool(2))
+print(bool("good"))
+print(bool([0,1,2]))
+print(bool(0))
+print(bool(""))
+print(bool([]))
+print(bool([[]]))
