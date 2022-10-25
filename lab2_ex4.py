@@ -1,9 +1,10 @@
 a = int(input())
-i = [1,1]
+f1 = 1
+f2 = 1
 while a > 0:
-  print(i[1]+i[2])
-  i[1] =i[2]
-  i[2] = i[2]+i[1]
-  
-  
+  f3 = f1 + f2
+  print(f3)
+  f1 = f2
+  f2 = f3
+  a = a - 1
   
