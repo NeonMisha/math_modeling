@@ -13,6 +13,8 @@ def circle_move(R):
     elif  R>5:
          x =  100*np.cos(alpha)
          y =  100*np.sin(alpha)
+
+
     else :
         x =  4*np.cos(alpha)
         y =  4*np.sin(alpha)

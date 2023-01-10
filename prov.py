@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import numpy as np
  
 fig, ax = plt.subplots()
-ball, = plt.plot([], [], 'o', color='r', label='Ball')
+fragments, = plt.plot([], [], 'o', color='r', label='fragments')
  
-def circle_move(R, vx0, vy0, time):
+def splinter_move(R, vx0, vy0, time):
     x0 = vx0 * time
     y0 = vy0 * time
     alpha = np.arange(0, 2*np.pi, 0.1)
@@ -18,11 +18,11 @@ plt.axis('equal')
 ax.set_xlim(-edge, edge)
 ax.set_ylim(-edge, edge)
  
-def animate(i):
-    ball.set_data(circle_move(R=0.5, vx0=0.1, vy0=0.1, time=i))
+def cartoon(i):
+    fragments.set_data(splinter_move(R=0.5, vx0=0.1, vy0=0.1, time=i))
     
 ani = animation.FuncAnimation(fig,
-                              animate,
+                              cartoon,
                               frames=100,
                               interval=30
                              )
