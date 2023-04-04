@@ -4,59 +4,37 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 # Определяем переменную величину и количество кадров
-frames = 100
-frames_anim = 150
-t = np.linspace(0, 20, frames)
-
-# Определяем начальные значения и параметры
-g = 9.8
-rho_v= 1.2754
-rho_g = 0.173
-r = 1
-V = 4/3*np.pi*r**3
-m = rho_g*V+2
+frames = 200
+t = np.linspace(0, 5, frames)
 
 # Определяем функцию для системы диф. уравнений
 def move_func(z, t):
     x, v_x, y, v_y = z
-
     dxdt = v_x
     dv_xdt = 0
-    dydt = v_y 
-    dv_ydt = (rho_v * V / m - 1) * g * np.exp(-0.2*y)
-
-    # print(f'y: {y}')
-    # print(f'x: {x}')
-    # print(f'dydt: {dydt}')
-
+    dydt = v_y
+    dv_ydt = - g
     return dxdt, dv_xdt, dydt, dv_ydt
-
+# Определяем начальные значения и параметры
+g = 9.8
+v = 20 
+alpha = 80 * np.pi / 180
+u = 0.9
 x0 = 0
-v_x0 = 0
+v_x0 = 3
 y0 = 0
-v_y0 = 0
+v_y0 = 187.13415035/10
 
 z0 = x0, v_x0, y0, v_y0
-
 # Решаем систему диф. уравнений
 sol = odeint(move_func, z0, t)
-print(sol)
-
 def solve_func(i, key):
-    if i < frames:
-        if key == 'point':
-            x = sol[i, 0]/10
-            y = sol[i, 2]/10
-        else:
-            x = sol[:i, 0]/10
-            y = sol[:i, 2]/10
+    if key == 'point':
+        x = sol[i, 0]
+        y = sol[i, 2]
     else:
-        if key == 'point':
-            x = 0
-            y = 187.13415035/10
-        else:
-            x = 0
-            y = 187.13415035/10
+        x = sol[:i, 0]
+        y = sol[:i, 2]
     return x, y
 
 # Строим решение в виде графика и анимируем
@@ -64,18 +42,17 @@ fig, ax = plt.subplots()
 
 ball, = plt.plot([], [], 'o', color='r')
 ball_line, = plt.plot([], [], '-', color='r')
-
 def animate(i):
     ball.set_data(solve_func(i, 'point'))
     ball_line.set_data(solve_func(i, 'line'))
 
 ani = FuncAnimation(fig,
                     animate,
-                    frames=frames_anim,
+                    frames=frames,
                     interval=30)
 
-edge = 20
-ax.set_xlim(-100, 12000)
+edge = 15
+ax.set_xlim(-3, edge)
 ax.set_ylim(0, edge)
 
-ani.save("new_pic.gif")
+ani.save("pic67.gif")

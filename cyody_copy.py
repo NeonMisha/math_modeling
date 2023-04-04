@@ -4,9 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 
 # Определяем переменную величину и количество кадров
-frames = 100
-frames_anim = 150
-t = np.linspace(0, 20, frames)
+frames = 500
+t = np.linspace(0, 100, frames)
 
 # Определяем начальные значения и параметры
 g = 9.8
@@ -21,9 +20,9 @@ def move_func(z, t):
     x, v_x, y, v_y = z
 
     dxdt = v_x
-    dv_xdt = 0
+    dv_xdt = 0.1 * x * np.exp(-0.001 * x) + 1 
     dydt = v_y 
-    dv_ydt = (rho_v * V / m - 1) * g * np.exp(-0.2*y)
+    dv_ydt = 0
 
     # print(f'y: {y}')
     # print(f'x: {x}')
@@ -33,7 +32,7 @@ def move_func(z, t):
 
 x0 = 0
 v_x0 = 0
-y0 = 0
+y0 =  187.13415035/10
 v_y0 = 0
 
 z0 = x0, v_x0, y0, v_y0
@@ -43,20 +42,12 @@ sol = odeint(move_func, z0, t)
 print(sol)
 
 def solve_func(i, key):
-    if i < frames:
-        if key == 'point':
-            x = sol[i, 0]/10
-            y = sol[i, 2]/10
-        else:
-            x = sol[:i, 0]/10
-            y = sol[:i, 2]/10
+    if key == 'point':
+        x = sol[i, 0]
+        y = sol[i, 2]
     else:
-        if key == 'point':
-            x = 0
-            y = 187.13415035/10
-        else:
-            x = 0
-            y = 187.13415035/10
+        x = sol[:i, 0]
+        y = sol[:i, 2]
     return x, y
 
 # Строим решение в виде графика и анимируем
@@ -71,11 +62,11 @@ def animate(i):
 
 ani = FuncAnimation(fig,
                     animate,
-                    frames=frames_anim,
+                    frames=frames,
                     interval=30)
 
 edge = 20
 ax.set_xlim(-100, 12000)
 ax.set_ylim(0, edge)
 
-ani.save("new_pic.gif")
+ani.save("new_pic1.gif")
