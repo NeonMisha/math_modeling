@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from scipy.integrate import odeint
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
@@ -11,19 +12,22 @@ t = np.linspace(0, 5, frames)
 def move_func(z, t):
     x, v_x, y, v_y = z
     dxdt = v_x
-    dv_xdt = 0
+    dv_xdt = u
     dydt = v_y
-    dv_ydt = - g - k*v_y**2
+    dv_ydt = q*g*V-g*m
     return dxdt, dv_xdt, dydt, dv_ydt
 # Определяем начальные значения и параметры
 g = 9.8
-v = 20
-k = 1.4*10**-23
-u = 0.1
+q = 0.173
+V = 4
+m = q*V/10
+alpha = 80 * np.pi / 180
+v = 2
+u = 5
 x0 = 0
-v_x0 = 0
+v_x0 = v * np.cos(alpha)
 y0 = 0
-v_y0 = v
+v_y0 = 0
 
 z0 = x0, v_x0, y0, v_y0
 # Решаем систему диф. уравнений
@@ -51,8 +55,8 @@ ani = FuncAnimation(fig,
                     frames=frames,
                     interval=30)
 
-edge = 15
-ax.set_xlim(-3,3)
-ax.set_ylim(0, edge)
+edge = 100
+ax.set_xlim(-3, edge)
+ax.set_ylim(0, edge )
 
-ani.save("pic8.gif")
+ani.save("pic58.gif")
