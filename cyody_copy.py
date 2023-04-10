@@ -55,7 +55,7 @@ fig, ax = plt.subplots()
 
 ball, = plt.plot([], [], 'o', color='r')
 ball_line, = plt.plot([], [], '-', color='r')
-
+plt.xlabel('КИТАЙ                                                                                                  США')
 def animate(i):
     ball.set_data(solve_func(i, 'point'))
     ball_line.set_data(solve_func(i, 'line'))
